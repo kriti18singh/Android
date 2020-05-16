@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">LocationApp</string>
+    <string name="remove_location_updates">Stop location updates</string>
+</resources>
