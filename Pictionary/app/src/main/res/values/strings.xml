@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Pictionary Game</string>
+    <string name="header">Pictionary</string>
+    <string name="start">Start Game</string>
+</resources>
