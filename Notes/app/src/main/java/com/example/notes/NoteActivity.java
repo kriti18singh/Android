@@ -1,5 +1,6 @@
 package com.example.notes;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -16,13 +17,15 @@ import androidx.navigation.ui.NavigationUI;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.List;
 
 public class NoteActivity extends AppCompatActivity {
 
-    private AppBarConfiguration appBarConfiguration;
+    public static final String KEY_NOTE_INFO = "com.example.notes.note_info";
+    private NoteInfo mNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,28 @@ public class NoteActivity extends AppCompatActivity {
         ArrayAdapter<CourseInfo> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, courses);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+        readDisplaytStateValue();
+
+        EditText textNoteTitle = findViewById(R.id.note_title);
+        EditText textNoteText = findViewById(R.id.note_text);
+
+        displayNote(spinner, textNoteTitle, textNoteText);
+    }
+
+    private void displayNote(Spinner spinner, EditText textNoteTitle, EditText textNoteText) {
+        List<CourseInfo> courses = DataManager.getInstance().getCourses();
+        int courseIndex = courses.indexOf(mNote.getCourse());
+        spinner.setSelection(courseIndex);
+
+
+        textNoteTitle.setText(mNote.getTitle());
+        textNoteText.setText(mNote.getText());
+    }
+
+    private void readDisplaytStateValue() {
+        Intent intent = getIntent();
+        mNote = intent.getParcelableExtra(KEY_NOTE_INFO);
     }
 
     @Override
