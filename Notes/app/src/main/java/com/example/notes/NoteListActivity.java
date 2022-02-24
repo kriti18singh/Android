@@ -58,10 +58,8 @@ public class NoteListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(NoteListActivity.this, NoteActivity.class);
-                NoteInfo noteInfo = (NoteInfo) listView.getItemAtPosition(position);
 
-                intent.putExtra(NoteActivity.KEY_NOTE_INFO, noteInfo);
-
+                intent.putExtra(NoteActivity.KEY_NOTE_POSITION, position);
                 startActivity(intent);
             }
         });
