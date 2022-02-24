@@ -26,6 +26,7 @@ public class NoteActivity extends AppCompatActivity {
 
     public static final String KEY_NOTE_INFO = "com.example.notes.note_info";
     private NoteInfo mNote;
+    private boolean mIsNewNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,9 @@ public class NoteActivity extends AppCompatActivity {
         EditText textNoteTitle = findViewById(R.id.note_title);
         EditText textNoteText = findViewById(R.id.note_text);
 
-        displayNote(spinner, textNoteTitle, textNoteText);
+        if (!mIsNewNote) {
+            displayNote(spinner, textNoteTitle, textNoteText);
+        }
     }
 
     private void displayNote(Spinner spinner, EditText textNoteTitle, EditText textNoteText) {
@@ -64,6 +67,7 @@ public class NoteActivity extends AppCompatActivity {
     private void readDisplaytStateValue() {
         Intent intent = getIntent();
         mNote = intent.getParcelableExtra(KEY_NOTE_INFO);
+        mIsNewNote = mNote == null ? true : false;
     }
 
     @Override
