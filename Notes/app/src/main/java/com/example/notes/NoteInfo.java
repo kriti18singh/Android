@@ -69,4 +69,9 @@ public class NoteInfo implements Parcelable {
         parcel.writeString(mTitle);
         parcel.writeString(mText);
     }
+
+    @Override
+    public String toString() {
+        return mCourse.getCourseId() + "|" + mTitle + "|" + mText;
+    }
 }
