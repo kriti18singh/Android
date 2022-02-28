@@ -1,6 +1,7 @@
 package com.example.notes;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
         NoteInfo noteInfo = mNotes.get(position);
         holder.textCourse.setText(noteInfo.getCourse().getTitle());
         holder.textTitle.setText(noteInfo.getTitle());
+        holder.mCurrentPosition = position;
     }
 
     @Override
@@ -40,14 +42,25 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
         return mNotes.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView textCourse;
         public final TextView textTitle;
+        public int mCurrentPosition;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textCourse = itemView.findViewById(R.id.text_course);
             textTitle = itemView.findViewById(R.id.text_title);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mContext, NoteActivity.class);
+
+                    intent.putExtra(NoteActivity.KEY_NOTE_POSITION, mCurrentPosition);
+                    mContext.startActivity(intent);
+                }
+            });
         }
     }
 

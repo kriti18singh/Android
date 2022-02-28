@@ -25,6 +25,7 @@ import com.example.notes.databinding.ActivityNoteListBinding;
 import java.util.List;
 
 public class NoteListActivity extends AppCompatActivity {
+    private NoteRecyclerAdapter noteRecyclerAdapter;
 
 
     //private ArrayAdapter<NoteInfo> mNotesAdapter;
@@ -72,14 +73,15 @@ public class NoteListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(notesLayoutManager);
 
         List<NoteInfo> notes = DataManager.getInstance().getNotes();
-        NoteRecyclerAdapter adapter = new NoteRecyclerAdapter(this, notes);
-        recyclerView.setAdapter(adapter);
+        noteRecyclerAdapter = new NoteRecyclerAdapter(this, notes);
+        recyclerView.setAdapter(noteRecyclerAdapter);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         //mNotesAdapter.notifyDataSetChanged();
+        noteRecyclerAdapter.notifyDataSetChanged();
     }
 
 
