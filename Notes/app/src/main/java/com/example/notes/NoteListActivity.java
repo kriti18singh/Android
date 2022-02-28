@@ -17,6 +17,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notes.databinding.ActivityNoteListBinding;
 
@@ -25,7 +27,7 @@ import java.util.List;
 public class NoteListActivity extends AppCompatActivity {
 
 
-    private ArrayAdapter<NoteInfo> mNotesAdapter;
+    //private ArrayAdapter<NoteInfo> mNotesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,7 @@ public class NoteListActivity extends AppCompatActivity {
     }
 
     private void initializeDisplayContent() {
-        ListView listView = findViewById(R.id.list_notes);
+        /*ListView listView = findViewById(R.id.list_notes);
         List<NoteInfo> notes = DataManager.getInstance().getNotes();
 
         mNotesAdapter = new ArrayAdapter(this,
@@ -64,12 +66,17 @@ public class NoteListActivity extends AppCompatActivity {
                 intent.putExtra(NoteActivity.KEY_NOTE_POSITION, position);
                 startActivity(intent);
             }
-        });
+        });*/
+        RecyclerView recyclerView = findViewById(R.id.list_notes);
+        LinearLayoutManager notesLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(notesLayoutManager);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mNotesAdapter.notifyDataSetChanged();
+        //mNotesAdapter.notifyDataSetChanged();
     }
+
+
 }
