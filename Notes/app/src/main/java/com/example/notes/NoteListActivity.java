@@ -70,6 +70,10 @@ public class NoteListActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.list_notes);
         LinearLayoutManager notesLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(notesLayoutManager);
+
+        List<NoteInfo> notes = DataManager.getInstance().getNotes();
+        NoteRecyclerAdapter adapter = new NoteRecyclerAdapter(this, notes);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
