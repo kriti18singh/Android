@@ -147,6 +147,7 @@ public class NoteActivity extends AppCompatActivity {
 
         saveOriginalNoteValues();
         displayNote(mSpinnerCourses, mTextNoteTitle, mTextNoteText);
+        invalidateOptionsMenu();
     }
 
     private void sendEmail() {
@@ -190,5 +191,13 @@ public class NoteActivity extends AppCompatActivity {
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         mViewModel.saveState(outState);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.action_next);
+        int lastIndex = DataManager.getInstance().getNotes().size() - 1;
+        item.setEnabled(mNewNotePosition < lastIndex);
+        return super.onPrepareOptionsMenu(menu);
     }
 }
