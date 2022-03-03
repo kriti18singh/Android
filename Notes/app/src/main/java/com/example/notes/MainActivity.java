@@ -14,25 +14,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.notes.databinding.ActivityMainBinding;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private AppBarConfiguration mAppBarConfiguration;
-    private NoteRecyclerAdapter noteRecyclerAdapter;
     private RecyclerView mRecyclerView;
-    private LinearLayoutManager mNotesLayoutManager;
+    private NoteRecyclerAdapter mNotesRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,23 +87,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void initializeDisplayContent() {
         mRecyclerView = findViewById(R.id.list_items);
-        mNotesLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mNotesLayoutManager);
 
         displayNotes();
     }
 
     private void displayNotes() {
         List<NoteInfo> notes = DataManager.getInstance().getNotes();
-        noteRecyclerAdapter = new NoteRecyclerAdapter(this, notes);
-        mRecyclerView.setAdapter(noteRecyclerAdapter);
+        mNotesRecyclerAdapter = new NoteRecyclerAdapter(this, notes);
+        LinearLayoutManager notesLayoutManager = new LinearLayoutManager(this);
+
+        mRecyclerView.setLayoutManager(notesLayoutManager);
+        mRecyclerView.setAdapter(mNotesRecyclerAdapter);
+
+        setSelectionNavItem(R.id.nav_notes);
     }
+
+    private void setSelectionNavItem(int id) {
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        Menu menu = navigationView.getMenu();
+        menu.getItem(id).setEnabled(true);
+    }
+
+    private void displayCourses() {
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        List<CourseInfo> courses = DataManager.getInstance().getCourses();
+        CourseRecyclerAdapter courseRecyclerAdapter = new CourseRecyclerAdapter(this, courses);
+
+        mRecyclerView.setLayoutManager(gridLayoutManager);
+        mRecyclerView.setAdapter(courseRecyclerAdapter);
+    }
+
 
     @Override
     protected void onResume() {
         super.onResume();
         //mNotesAdapter.notifyDataSetChanged();
-        noteRecyclerAdapter.notifyDataSetChanged();
+        mNotesRecyclerAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -124,15 +137,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    private void displayCourses() {
-
-    }
-
-    private void handleSelection(String msg) {
-        View view = findViewById(R.id.list_items);
-        Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
