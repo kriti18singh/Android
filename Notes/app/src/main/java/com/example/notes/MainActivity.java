@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void setSelectionNavItem(int id) {
         NavigationView navigationView = findViewById(R.id.nav_view);
         Menu menu = navigationView.getMenu();
-        menu.getItem(id).setEnabled(true);
+        menu.findItem(id).setChecked(true);
     }
 
     private void displayCourses() {
@@ -115,6 +115,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mRecyclerView.setAdapter(courseRecyclerAdapter);
+
+        setSelectionNavItem(R.id.nav_courses);
     }
 
 
