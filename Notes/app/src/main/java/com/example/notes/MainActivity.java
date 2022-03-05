@@ -109,7 +109,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void displayCourses() {
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(
+                this,
+                getResources().getInteger(R.integer.course_grid_span)
+        );
         List<CourseInfo> courses = DataManager.getInstance().getCourses();
         CourseRecyclerAdapter courseRecyclerAdapter = new CourseRecyclerAdapter(this, courses);
 
